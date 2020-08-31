@@ -1,5 +1,4 @@
 astroid==2.4.2
-autopep8==1.5.3
 backcall==0.2.0
 certifi==2020.6.20
 chardet==3.0.4
@@ -28,6 +27,7 @@ matplotlib==3.2.2
 mccabe==0.6.1
 networkx==2.4
 numpy==1.19.0
+opencv-contrib-python
 opencv-python
 parso==0.7.1
 pickleshare==0.7.5
