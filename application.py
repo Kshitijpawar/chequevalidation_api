@@ -16,42 +16,45 @@ app = Flask(__name__)
 
 @app.route('/imagehandling', methods= ['POST'])
 def get_image():
-    print("inside")
     img = cv2.imdecode(np.frombuffer(request.files['hello'].read(), np.uint8), cv2.IMREAD_UNCHANGED)
     bankName = request.files['hello'].filename
 
-    resolution = [img.shape[0], img.shape[1]]
+    resolution = 'Valid' if img.shape[0] > 720 and img.shape[1] > 720 else 'Invalid'
 
-
-    crop_img, stored_fn = crop_image(img, )
+    try:
+        crop_img, stored_fn = crop_image(img, bankName)
+    except:
+        return json.dumps({'Obscured Check':'Invalid'})
     
-    print(resolution)
-    print(crop_img.shape)
     cv2.imwrite(stored_fn, img)
 
     blurry, blur_no = blur_or_not(crop_img)
 
-    # brightness = calc_brightness(crop_img)
     brightness = crop(Image.fromarray(crop_img), 200, 200)
-
-
-    # argumentsList = [stored_fn, '-t', 'image/jpeg', '-o', './packagetest/newresult.json']
-    # okthisisvaliddict = entrymain(argumentsList)
-    # print(okthisisvaliddict)
-    # runAnalysis(argumentsList)
-
 
     result = {
         # 'Stats' : 'Image received',
         'Blurry' : blurry,
         # 'Amount of Blur' : blur_no,
         'Brightness' : brightness,
-        'Resolution' : "{} X {}".format(resolution[0], resolution[1]),
+        'Resolution' : resolution,
     }
-    # result.update(okthisisvaliddict)
-
-    print(result)
-    return jsonify(result)
+    if 'Invalid' in result.values():
+        debug = {
+        # 'Stats' : 'Image received',
+        'Blurry' : blurry,
+        'Amount of Blur' : blur_no,
+        'Brightness' : brightness,
+        'Resolution' : resolution,
+        }
+        print(debug)
+        return json.dumps({'Image Quality Poor':'Invalid'})
+    else:
+        argumentsList = [stored_fn, '-t', 'image/jpeg', '-o', './packagetest/newresult.json']
+        okthisisvaliddict = entrymain(argumentsList)
+        result.update(okthisisvaliddict)
+        print(result)
+        return jsonify(result)
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host= '0.0.0.0', debug= True)

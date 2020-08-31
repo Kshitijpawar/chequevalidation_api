@@ -6,8 +6,7 @@ import cv2
 
 def crop_image(image, bankName):
 	templatePath = template_path + bankName + '.jpg' 
-	template = cv2.imread(template_path)
-	print(os.getcwd())
+	template = cv2.imread(templatePath)
 	template = cv2.cvtColor(template, cv2.COLOR_BGR2GRAY)
 	template = cv2.Canny(template, 50, 200)
 	(tH, tW) = template.shape[:2]
@@ -29,7 +28,6 @@ def crop_image(image, bankName):
 
 		if found is None or maxVal > found[0]:			
 			found = (maxVal, maxLoc, r)
-			# print("{}  {}".format(imagePath, found))
 
 	(_, maxLoc, r) = found
 	(startX, startY) = (int(maxLoc[0] * r), int(maxLoc[1] * r))
@@ -37,10 +35,8 @@ def crop_image(image, bankName):
 
 	cv2.rectangle(image, (startX, startY), (endX, endY), (0, 0, 255), 2)
 	crop_img = image[startY : endY, startX : endX]
-	# print("{} {}".format(image.shape, crop_img.shape))
 	filename = './packagetest/hellth.jpg'
 	cv2.imwrite(filename, crop_img)
-	print("DONE")
 	return crop_img, filename
 	
 	

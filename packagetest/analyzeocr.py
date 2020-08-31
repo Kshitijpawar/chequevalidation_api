@@ -10,6 +10,7 @@ from datetime import date
 
 
 def validation(ifsCode, dateVal, payee, amountWords, amountNumbers, micr):
+    print(amountWords)
     inValidStr = 'Invalid'
     validStr = 'Valid'
     validation = {}
@@ -120,13 +121,6 @@ def runAnalysis(input_file, output_file, file_type):
                 amountWords = resp_json['analyzeResult']['documentResults'][0]['fields']['AmountWords']['valueString']
                 amountNumbers = resp_json['analyzeResult']['documentResults'][0]['fields']['AmountNumbers']['valueString']
                 micr = resp_json['analyzeResult']['documentResults'][0]['fields']['Micr']['valueString']
-                # print(address)
-                # print(ifsCode)
-                # print(date)
-                # print(payee)
-                # print(amountWords)
-                # print(amountNumbers)
-                print(micr)
                 getValidation = validation(ifsCode, dateVal, payee, amountWords, amountNumbers, micr)
 
                 if output_file:

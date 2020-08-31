@@ -15,11 +15,10 @@ def crop(pilimage, height, width):
             allbrightresults.append(single_brightness_val)
     
     theCounter = Counter(allbrightresults)
-    print(theCounter)
     if theCounter['Not Bright'] > 1:
-        return 'Not Bright'
+        return 'Invalid'
     else:
-        return 'Bright'
+        return 'Valid'
 
 
 
