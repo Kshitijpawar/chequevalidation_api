@@ -39,7 +39,6 @@ pylint==2.5.3
 pyparsing==2.4.7
 python-dateutil==2.8.1
 PyWavelets==1.1.1
-pypiwin32==228
 pyzmq==19.0.2
 requests==2.24.0
 scikit-image==0.17.2
