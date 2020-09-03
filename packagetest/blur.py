@@ -8,8 +8,8 @@ def blur_or_not(image, threshold= 100):
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     hy = cv2.Laplacian(image, cv2.CV_64F)
     fm = variance_of_laplacian(gray)
-    text = "Not Blurry"
+    text = "Valid"
 
     if fm < threshold:
-        text = "Blurry"
+        text = "Invalid"
     return text, fm
