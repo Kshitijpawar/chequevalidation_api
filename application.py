@@ -8,7 +8,7 @@ from packagetest.blur import blur_or_not
 from packagetest.template import crop_image
 from packagetest.analyzeocr import *
 from packagetest.revisedbrightness import *
-
+from packagetest.bankname import getBankName 
 
 # auth = HTTPBasicAuth()
 app = Flask(__name__)
@@ -16,8 +16,11 @@ app = Flask(__name__)
 
 @app.route('/imagehandling', methods= ['POST'])
 def get_image():
-    img = cv2.imdecode(np.frombuffer(request.files['hello'].read(), np.uint8), cv2.IMREAD_UNCHANGED)
-    bankName = request.files['hello'].filename
+    img = cv2.imdecode(np.frombuffer(request.files['hello'].read(), np.uint8), cv2.IMREAD_UNCHANGED)    
+    
+    forBankNameImage = Image.open(request.files['hello'])
+    bankName = getBankName(forBankNameImage)
+    # bankName = request.files['hello'].filename
 
     resolution = 'Valid' if img.shape[0] > 720 and img.shape[1] > 720 else 'Invalid'
 
@@ -27,7 +30,7 @@ def get_image():
         return json.dumps({'Obscured Check':'Invalid'})
     
     cv2.imwrite(stored_fn, img)
-
+    
     blurry, blur_no = blur_or_not(crop_img)
 
     brightness = crop(Image.fromarray(crop_img), 200, 200)
@@ -47,7 +50,7 @@ def get_image():
         'Brightness' : brightness,
         'Resolution' : resolution,
         }
-        print(debug)
+        # print(debug)
         return json.dumps({'Image Quality Poor':'Invalid'})
     else:
         argumentsList = [stored_fn, '-t', 'image/jpeg', '-o', './packagetest/newresult.json']
@@ -57,5 +60,5 @@ def get_image():
         return jsonify(result)
 
 if __name__ == '__main__':
-    # app.run(host= '0.0.0.0', debug= True)
-    app.run()
+    app.run(host= '0.0.0.0', debug= True)
+    # app.run()

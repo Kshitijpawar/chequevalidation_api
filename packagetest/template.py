@@ -5,6 +5,7 @@ from packagetest import template_path
 import cv2
 
 def crop_image(image, bankName):
+	print
 	templatePath = template_path + bankName + '.jpg' 
 	template = cv2.imread(templatePath)
 	template = cv2.cvtColor(template, cv2.COLOR_BGR2GRAY)
@@ -24,12 +25,17 @@ def crop_image(image, bankName):
 		edged = cv2.Canny(resized, 50, 200)
 		result = cv2.matchTemplate(edged, template, cv2.TM_CCOEFF_NORMED)
 		
-		(_, maxVal, _, maxLoc) = cv2.minMaxLoc(result)
+		(minVal, maxVal, minLoc, maxLoc) = cv2.minMaxLoc(result)
 
 		if found is None or maxVal > found[0]:			
 			found = (maxVal, maxLoc, r)
-
-	(_, maxLoc, r) = found
+	
+	if found[0] < 0.04:
+		print("Very Low Accuracy!!")
+		return Exception("Very low Accuracy")
+	(maxVal, maxLoc, r) = found
+	print("Final : ",maxVal)
+	
 	(startX, startY) = (int(maxLoc[0] * r), int(maxLoc[1] * r))
 	(endX, endY) = (int((maxLoc[0] + tW) * r), int((maxLoc[1] + tH) * r))
 

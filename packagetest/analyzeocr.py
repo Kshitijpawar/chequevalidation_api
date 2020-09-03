@@ -65,7 +65,8 @@ def runAnalysis(input_file, output_file, file_type):
     # Model ID
     # model_id = "adc7d81f-007c-4424-959c-23bea89f1460"
     # model_id = "8b91aa0f-b8e2-41d4-98fc-11ca80fb8a57"
-    model_id = "08b1c63d-165e-40ad-b636-adb200fdb6aa"
+    # model_id = "08b1c63d-165e-40ad-b636-adb200fdb6aa"
+    model_id = "c002cd88-29e5-4206-9497-23dc03474fe4"
     post_url = endpoint + "/formrecognizer/v2.0/custom/models/%s/analyze" % model_id
     params = {
         "includeTextDetails": True
