@@ -62,5 +62,5 @@ def get_image():
 
 if __name__ == '__main__':
     model = tensorflow.keras.models.load_model('keras_model.h5')
-    app.run(host= '0.0.0.0', debug= True)
+    app.run(host= '0.0.0.0', port= 80,debug= True)
     # app.run()
