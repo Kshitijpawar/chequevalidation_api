@@ -1,10 +1,10 @@
-import tensorflow.keras
+# import tensorflow.keras
 from PIL import Image, ImageOps
 import numpy as np
 from packagetest import banks
 
-def getBankName(image):
-    model = tensorflow.keras.models.load_model('keras_model.h5')
+def getBankName(model, image):
+    # model = tensorflow.keras.models.load_model('keras_model.h5')
 
     data = np.ndarray(shape=(1, 224, 224, 3), dtype=np.float32)
 

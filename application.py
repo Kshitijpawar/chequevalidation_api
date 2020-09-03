@@ -2,6 +2,7 @@ from flask import Flask, jsonify, abort, make_response, request, url_for
 import cv2
 import numpy as np
 from PIL import Image
+import tensorflow.keras
 
 from packagetest.brightness import calc_brightness    
 from packagetest.blur import blur_or_not
@@ -19,7 +20,7 @@ def get_image():
     img = cv2.imdecode(np.frombuffer(request.files['hello'].read(), np.uint8), cv2.IMREAD_UNCHANGED)    
     
     forBankNameImage = Image.open(request.files['hello'])
-    bankName = getBankName(forBankNameImage)
+    bankName = getBankName(model, forBankNameImage)
     # bankName = request.files['hello'].filename
 
     resolution = 'Valid' if img.shape[0] > 720 and img.shape[1] > 720 else 'Invalid'
@@ -60,5 +61,6 @@ def get_image():
         return jsonify(result)
 
 if __name__ == '__main__':
+    model = tensorflow.keras.models.load_model('keras_model.h5')
     app.run(host= '0.0.0.0', debug= True)
     # app.run()
