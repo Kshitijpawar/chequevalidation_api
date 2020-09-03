@@ -1,0 +1,1 @@
+sudo /anaconda/envs/py37_tensorflow/n/python application.py
