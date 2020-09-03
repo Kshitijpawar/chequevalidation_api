@@ -1,1 +1,1 @@
-sudo /anaconda/envs/py37_tensorflow/bin/python application.py
+/anaconda/envs/py37_tensorflow/bin/python application.py
