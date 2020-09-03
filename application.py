@@ -13,7 +13,7 @@ from packagetest.bankname import getBankName
 
 # auth = HTTPBasicAuth()
 app = Flask(__name__)
-
+model = tensorflow.keras.models.load_model('keras_model.h5')
 
 @app.route('/imagehandling', methods= ['POST'])
 def get_image():
@@ -61,6 +61,6 @@ def get_image():
         return jsonify(result)
 
 if __name__ == '__main__':
-    model = tensorflow.keras.models.load_model('keras_model.h5')
+    
     app.run(host= '0.0.0.0', port= 80,debug= True)
     # app.run()
