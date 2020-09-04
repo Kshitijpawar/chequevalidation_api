@@ -41,7 +41,7 @@ def crop_image(image, bankName):
 
 	cv2.rectangle(image, (startX, startY), (endX, endY), (0, 0, 255), 2)
 	crop_img = image[startY : endY, startX : endX]
-	filename = './packagetest/hellth.jpg'
+	filename = './packagetest/uncropped.jpg'
 	cv2.imwrite(filename, crop_img)
 	return crop_img, filename
 	

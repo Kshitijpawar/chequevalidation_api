@@ -11,7 +11,6 @@ from packagetest.analyzeocr import *
 from packagetest.revisedbrightness import *
 from packagetest.bankname import getBankName 
 
-# auth = HTTPBasicAuth()
 app = Flask(__name__)
 model = tensorflow.keras.models.load_model('keras_model.h5')
 
@@ -44,13 +43,13 @@ def get_image():
         'Resolution' : resolution,
     }
     if 'Invalid' in result.values():
-        debug = {
-        # 'Stats' : 'Image received',
-        'Blurry' : blurry,
-        'Amount of Blur' : blur_no,
-        'Brightness' : brightness,
-        'Resolution' : resolution,
-        }
+        # debug = {
+        # # 'Stats' : 'Image received',
+        # 'Blurry' : blurry,
+        # 'Amount of Blur' : blur_no,
+        # 'Brightness' : brightness,
+        # 'Resolution' : resolution,
+        # }
         # print(debug)
         return json.dumps({'Image Quality Poor':'Invalid'})
     else:
